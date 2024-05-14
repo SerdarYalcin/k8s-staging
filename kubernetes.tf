@@ -13,7 +13,7 @@ module "gke" {
   region                     = "europe-west2"
   zones                      = ["europe-west2-a"]
   network                    = "k8s-staging"
-  subnetwork                 = "us-central1-01"
+  subnetwork                 = "uk-k8s-staging"
   http_load_balancing        = true
   gcs_fuse_csi_driver	       = false
   network_policy             = false

@@ -1,5 +1,5 @@
 resource "google_compute_subnetwork" "private" {
-  name                     = "k8s-staging"
+  name                     = "uk-k8s-staging"
   ip_cidr_range            = "192.168.0.0/20"
   region                   = "europe-west2"
   network                  = google_compute_network.main.id
