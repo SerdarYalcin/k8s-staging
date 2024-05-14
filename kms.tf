@@ -1,16 +1,19 @@
-resource "google_kms_key_ring" "key_ring" {
-  name     = "k8s-key-ring"
-  location = "europe-west2"
-}
+module "kms" {
+  source  = "terraform-google-modules/kms/google"
+  version = "~> 2.3"
 
-resource "google_kms_crypto_key" "symmetric_encrypt_decrypt_key" {
-  name            = "k8s"
-  key_ring        = google_kms_key_ring.key_ring.id
-  rotation_period = "31536000s" # 365 days in seconds
+  project_id   = "<PROJECT ID>"
+  location     = "europe"
+  keyring      = "k8s-keyring"
+  keys         = ["k8s"]
+  set_owners_for = ["k8s-902"]
+  owners = [
+    "k8s-902@gpg-k8s-staging.iam.gserviceaccount.com"
+  ]
 
-  purpose = "ENCRYPT_DECRYPT"
-
-  crypto_key_config {
-    algorithm = "GOOGLE_SYMMETRIC_ENCRYPTION"
-  }
+  key_algorithm             = "GOOGLE_SYMMETRIC_ENCRYPTION"
+  key_protection_level      = "SOFTWARE"
+  key_rotation_period       = "31536000s"  # 365 days in seconds
+  purpose                   = "ENCRYPT_DECRYPT"
+  prevent_destroy           = true
 }
