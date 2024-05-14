@@ -10,7 +10,7 @@ module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "gpg-k8s-staging"
   name                       = "gke-staging"
-  region                     = "europe-west2"
+  location                   = "europe-west2-a"
   zones                      = ["europe-west2-a"]
   network                    = "k8s-staging"
   subnetwork                 = "uk-k8s-staging"
@@ -46,7 +46,7 @@ module "gke" {
       enable_gvnic              = false
       logging_variant           = "DEFAULT"
       auto_repair               = false
-      auto_upgrade              = false
+      auto_upgrade              = true
       service_account           = "k8s-api@gpg-k8s-staging.iam.gserviceaccount.com"
       preemptible               = false
       initial_node_count        = 1
