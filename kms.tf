@@ -5,7 +5,7 @@ module "kms" {
   project_id   = "gpg-k8s-staging"
   location     = "europe-west2"
   keyring      = "k8s-keyring"
-  keys         = ["k8s"]
+  keys         = ["kubo"]
   set_owners_for = ["k8s-902"]
   owners = [
     "k8s-902@gpg-k8s-staging.iam.gserviceaccount.com"
