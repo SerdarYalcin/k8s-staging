@@ -10,7 +10,7 @@ module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "gpg-k8s-staging"
   name                       = "gke-staging"
- # region                   = "europe-west2-a"
+  region                     = "europe-west2-a"
   zones                      = ["europe-west2-a"]
   network                    = "k8s-staging"
   subnetwork                 = "uk-k8s-staging"
