@@ -20,8 +20,8 @@ module "gke" {
   horizontal_pod_autoscaling = false
   gce_pd_csi_driver          = true
   filestore_csi_driver       = false
-  #ip_range_pods              = "192.168.16.0/22"
-  #ip_range_services          = "192.168.20.0/23"
+  ip_range_pods              = "k8s-pod-range"
+  ip_range_services          = "k8s-service-range"
   release_channel            = "STABLE"
   kubernetes_version		     = "1.28.7-gke.1026000"
 
