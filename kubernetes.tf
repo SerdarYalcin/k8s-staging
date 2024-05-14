@@ -14,8 +14,6 @@ module "gke" {
   zones                      = ["europe-west2-a"]
   network                    = "k8s-staging"
   subnetwork                 = "us-central1-01"
-  ip_range_pods              = "us-central1-01-gke-01-pods"
-  ip_range_services          = "us-central1-01-gke-01-services"
   http_load_balancing        = true
   gcs_fuse_csi_driver	       = false
   network_policy             = false
@@ -24,7 +22,6 @@ module "gke" {
   filestore_csi_driver       = false
   ip_range_pods              = "192.168.16.0/22"
   ip_range_services          = "192.168.20.0/23"
-  database_encryption	       = true
   release_channel            = "STABLE"
   kubernetes_version		     = "1.28.7-gke.1026000"
 
