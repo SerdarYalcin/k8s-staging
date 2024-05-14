@@ -2,8 +2,8 @@ module "kms" {
   source  = "terraform-google-modules/kms/google"
   version = "~> 2.3"
 
-  project_id   = "<PROJECT ID>"
-  location     = "europe"
+  project_id   = "gpg-k8s-staging"
+  location     = "europe-west2"
   keyring      = "k8s-keyring"
   keys         = ["k8s"]
   set_owners_for = ["k8s-902"]
