@@ -10,7 +10,7 @@ module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "gpg-k8s-staging"
   name                       = "gke-staging"
-  region                     = "europe-west2-a"
+  region                     = "europe-west2"
   zones                      = ["europe-west2-a"]
   network                    = "k8s-staging"
   subnetwork                 = "uk-k8s-staging"
@@ -37,7 +37,7 @@ module "gke" {
     {
       name                      = "default-node-pool"
       machine_type              = "e2-medium"
-      node_locations            = "europe-west2-b"
+      node_locations            = "europe-west2-a"
       local_ssd_count           = 0
       spot                      = false
       disk_size_gb              = 100
