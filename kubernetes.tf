@@ -24,6 +24,7 @@ module "gke" {
   ip_range_services          = "k8s-service-range"
   release_channel            = "STABLE"
   kubernetes_version		     = "1.28.7-gke.1026000"
+  deletion_protection        = false
 
   database_encryption = [
     {
