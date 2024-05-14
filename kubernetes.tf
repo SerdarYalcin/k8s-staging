@@ -28,7 +28,7 @@ module "gke" {
   database_encryption = [
     {
     state    = "ENCRYPTED"
-    key_name = "projects/gpg-k8s-staging/locations/europe-west2/keyRings/k8s/cryptoKeys/k8s/cryptoKeyVersions/1"
+    key_name = "projects/gpg-k8s-staging/locations/europe-west2/keyRings/k8s/cryptoKeys/k8s"
   }]
 
 
