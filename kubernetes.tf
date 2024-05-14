@@ -37,7 +37,7 @@ module "gke" {
     {
       name                      = "default-node-pool"
       machine_type              = "e2-medium"
-      node_locations            = "europe-west2-a"
+      node_locations            = "europe-west2-b"
       local_ssd_count           = 0
       spot                      = false
       disk_size_gb              = 100
