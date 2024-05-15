@@ -43,7 +43,7 @@ module "gke" {
     {
       name                      = "default-node-pool"
       machine_type              = "e2-medium"
-      node_locations            = ["europe-west2-a"]
+      node_locations            = "europe-west2-a"
       local_ssd_count           = 0
       spot                      = false
       disk_size_gb              = 100
@@ -87,11 +87,11 @@ module "gke" {
 
 
 ####################
-# Optionally, define a maintenance window using the `google_container_cluster` resource if needed.
+###############Maintinance Policy########################
 resource "google_container_cluster" "primary" {
   name       = "gke-staging"
   location   = module.gke.zone
-  project    = var.project_id
+  project    = "gpg-k8s-staging"
   network    = module.gke.network
   subnetwork = module.gke.subnetwork
 
