@@ -15,7 +15,7 @@ module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "gpg-k8s-staging"
   name                       = "gke-staging"
-  location                   = "europe-west2-a"  # Specify the zone
+  zone                       = "europe-west2-a"  # Specify the zone
   regional                   = false             # Set to false for zonal deployment
   network                    = "k8s-staging"
   subnetwork                 = "uk-k8s-staging"
@@ -83,11 +83,22 @@ module "gke" {
       "default-node-pool",
     ]
   }
+}
 
-  maintenance_policy = {
-    recurring_window = {
+
+####################
+# Optionally, define a maintenance window using the `google_container_cluster` resource if needed.
+resource "google_container_cluster" "primary" {
+  name       = "gke-staging"
+  location   = module.gke.zone
+  project    = var.project_id
+  network    = module.gke.network
+  subnetwork = module.gke.subnetwork
+
+  maintenance_policy {
+    recurring_window {
       recurrence = "FREQ=MONTHLY;INTERVAL=6"
-      window = {
+      window {
         start_time = "2023-06-01T12:00:00Z"
         end_time   = "2023-06-01T14:00:00Z"
       }
