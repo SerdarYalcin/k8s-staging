@@ -90,10 +90,9 @@ module "gke" {
 ###############Maintinance Policy########################
 resource "google_container_cluster" "primary" {
   name       = "gke-staging"
-  zones      = module.gke.zones
   project    = "gpg-k8s-staging"
-  network    = module.gke.network
-  subnetwork = module.gke.subnetwork
+  network    = "k8s-staging"
+  subnetwork = "uk-k8s-staging"
 
   maintenance_policy {
     recurring_window {
