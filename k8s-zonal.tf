@@ -6,16 +6,6 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
-resource "google_project_service" "container" {
-  service = "container.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "compute" {
-  service = "compute.googleapis.com"
-  disable_on_destroy = false
-}
-
 resource "google_project_service" "file" {
   service = "file.googleapis.com"
   disable_on_destroy = false
