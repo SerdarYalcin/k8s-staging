@@ -90,18 +90,16 @@ module "gke" {
 ###############Maintinance Policy########################
 resource "google_container_cluster" "primary" {
   name       = "gke-staging"
-  location   = module.gke.zone
+  zones      = module.gke.zones
   project    = "gpg-k8s-staging"
   network    = module.gke.network
   subnetwork = module.gke.subnetwork
 
   maintenance_policy {
     recurring_window {
-      recurrence = "FREQ=MONTHLY;INTERVAL=6"
-      window {
-        start_time = "2023-06-01T12:00:00Z"
-        end_time   = "2023-06-01T14:00:00Z"
-      }
+        start_time = "2023-06-01T20:00:00Z"
+        end_time   = "2023-06-01T21:00:00Z"
+        recurrence = "FREQ=MONTHLY;INTERVAL=6"
     }
   }
 }
