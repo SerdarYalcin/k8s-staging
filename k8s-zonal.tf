@@ -6,16 +6,31 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
+resource "google_project_service" "container" {
+  service = "container.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "compute" {
+  service = "compute.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "file" {
+  service = "file.googleapis.com"
+  disable_on_destroy = false
+}
+
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "gpg-k8s-staging"
   name                       = "gke-staging"
-  region                     = "europe-west2"
-  zones                      = ["europe-west2-a"]
+  location                   = "europe-west2-a"  # Specify the zone
+  regional                   = false             # Set to false for zonal deployment
   network                    = "k8s-staging"
   subnetwork                 = "uk-k8s-staging"
   http_load_balancing        = true
-  gcs_fuse_csi_driver	       = false
+  gcs_fuse_csi_driver        = false
   network_policy             = false
   horizontal_pod_autoscaling = false
   gce_pd_csi_driver          = true
@@ -23,21 +38,22 @@ module "gke" {
   ip_range_pods              = "k8s-pod-range"
   ip_range_services          = "k8s-service-range"
   release_channel            = "STABLE"
-  kubernetes_version		     = "1.28.7-gke.1026000"
+  kubernetes_version         = "1.28.7-gke.1026000"
   deletion_protection        = false
+  remove_default_node_pool   = true
 
   database_encryption = [
     {
-    state    = "ENCRYPTED"
-    key_name = "projects/gpg-k8s-staging/locations/europe-west2/keyRings/k8s/cryptoKeys/k8s"
-  }]
-
+      state    = "ENCRYPTED"
+      key_name = "projects/gpg-k8s-staging/locations/europe-west2/keyRings/k8s/cryptoKeys/k8s"
+    }
+  ]
 
   node_pools = [
     {
       name                      = "default-node-pool"
       machine_type              = "e2-medium"
-      node_locations            = "europe-west2-a"
+      node_locations            = ["europe-west2-a"]
       local_ssd_count           = 0
       spot                      = false
       disk_size_gb              = 100
@@ -51,6 +67,7 @@ module "gke" {
       service_account           = "k8s-api@gpg-k8s-staging.iam.gserviceaccount.com"
       preemptible               = false
       initial_node_count        = 1
+      autoscaling               = false
     },
   ]
 
@@ -69,24 +86,21 @@ module "gke" {
     }
   }
 
-
-  # node_pools_taints = {
-  #   all = []
-
-  #   default-node-pool = [
-  #     {
-  #       key    = "default-node-pool"
-  #       value  = true
-  #       effect = "PREFER_NO_SCHEDULE"
-  #     },
-  #   ]
-  # }
-
   node_pools_tags = {
     all = []
 
     default-node-pool = [
       "default-node-pool",
     ]
+  }
+
+  maintenance_policy = {
+    recurring_window = {
+      recurrence = "FREQ=MONTHLY;INTERVAL=6"
+      window = {
+        start_time = "2023-06-01T12:00:00Z"
+        end_time   = "2023-06-01T14:00:00Z"
+      }
+    }
   }
 }
