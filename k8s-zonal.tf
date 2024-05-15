@@ -86,19 +86,7 @@ module "gke" {
 }
 
 
-####################
-###############Maintinance Policy########################
-resource "google_container_cluster" "primary" {
-  name       = "gke-staging"
-  project    = "gpg-k8s-staging"
-  network    = "k8s-staging"
-  subnetwork = "uk-k8s-staging"
 
-  maintenance_policy {
-    recurring_window {
-        start_time = "2023-06-01T20:00:00Z"
-        end_time   = "2023-06-01T21:00:00Z"
-        recurrence = "FREQ=MONTHLY;INTERVAL=6"
-    }
-  }
-}
+####Notes###
+#You need to create Google KMS Key
+#You need to update maintinace policy
