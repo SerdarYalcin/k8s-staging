@@ -15,7 +15,7 @@ module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "gpg-k8s-staging"
   name                       = "gke-staging"
-  zones                       = "europe-west2-a"  # Specify the zone
+  zones                      = ["europe-west2-a"]  # Specify the zone
   regional                   = false             # Set to false for zonal deployment
   network                    = "k8s-staging"
   subnetwork                 = "uk-k8s-staging"
